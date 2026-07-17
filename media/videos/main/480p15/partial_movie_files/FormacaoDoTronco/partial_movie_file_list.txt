@@ -1,0 +1,12 @@
+# This file is used internally by FFMPEG.
+file 'file:C:/Users/Ryan/OneDrive/Desktop/nova pasta/Mat-manim-2-bimestre/media/videos/main/480p15/partial_movie_files/FormacaoDoTronco/3178502537_426152494_3851127230.mp4'
+file 'file:C:/Users/Ryan/OneDrive/Desktop/nova pasta/Mat-manim-2-bimestre/media/videos/main/480p15/partial_movie_files/FormacaoDoTronco/484481906_1807285030_3084720385.mp4'
+file 'file:C:/Users/Ryan/OneDrive/Desktop/nova pasta/Mat-manim-2-bimestre/media/videos/main/480p15/partial_movie_files/FormacaoDoTronco/484481906_2631580503_4125556715.mp4'
+file 'file:C:/Users/Ryan/OneDrive/Desktop/nova pasta/Mat-manim-2-bimestre/media/videos/main/480p15/partial_movie_files/FormacaoDoTronco/1749683179_691929108_4101832256.mp4'
+file 'file:C:/Users/Ryan/OneDrive/Desktop/nova pasta/Mat-manim-2-bimestre/media/videos/main/480p15/partial_movie_files/FormacaoDoTronco/402028465_3012744484_134086857.mp4'
+file 'file:C:/Users/Ryan/OneDrive/Desktop/nova pasta/Mat-manim-2-bimestre/media/videos/main/480p15/partial_movie_files/FormacaoDoTronco/402028465_1609560253_2538500809.mp4'
+file 'file:C:/Users/Ryan/OneDrive/Desktop/nova pasta/Mat-manim-2-bimestre/media/videos/main/480p15/partial_movie_files/FormacaoDoTronco/402028465_2005305742_1919712503.mp4'
+file 'file:C:/Users/Ryan/OneDrive/Desktop/nova pasta/Mat-manim-2-bimestre/media/videos/main/480p15/partial_movie_files/FormacaoDoTronco/402028465_1041831483_3125191679.mp4'
+file 'file:C:/Users/Ryan/OneDrive/Desktop/nova pasta/Mat-manim-2-bimestre/media/videos/main/480p15/partial_movie_files/FormacaoDoTronco/402028465_928920556_3152383554.mp4'
+file 'file:C:/Users/Ryan/OneDrive/Desktop/nova pasta/Mat-manim-2-bimestre/media/videos/main/480p15/partial_movie_files/FormacaoDoTronco/402028465_1831374817_247483930.mp4'
+file 'file:C:/Users/Ryan/OneDrive/Desktop/nova pasta/Mat-manim-2-bimestre/media/videos/main/480p15/partial_movie_files/FormacaoDoTronco/402028465_3028852122_3346883348.mp4'

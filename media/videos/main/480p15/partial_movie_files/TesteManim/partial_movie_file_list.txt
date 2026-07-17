@@ -1,0 +1,5 @@
+# This file is used internally by FFMPEG.
+file 'file:C:/Users/Ryan/OneDrive/Desktop/nova pasta/Mat-manim-2-bimestre/media/videos/main/480p15/partial_movie_files/TesteManim/1584795214_2210122929_223132457.mp4'
+file 'file:C:/Users/Ryan/OneDrive/Desktop/nova pasta/Mat-manim-2-bimestre/media/videos/main/480p15/partial_movie_files/TesteManim/4072820271_2794203274_3791754206.mp4'
+file 'file:C:/Users/Ryan/OneDrive/Desktop/nova pasta/Mat-manim-2-bimestre/media/videos/main/480p15/partial_movie_files/TesteManim/4072820271_2408024828_3633217760.mp4'
+file 'file:C:/Users/Ryan/OneDrive/Desktop/nova pasta/Mat-manim-2-bimestre/media/videos/main/480p15/partial_movie_files/TesteManim/4072820271_20540348_169851933.mp4'
