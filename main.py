@@ -1595,3 +1595,714 @@ class VideoCompletoTronco(ThreeDScene):
         )
 
         FormulaVolumeDoTronco.construct(self)
+
+# ============================================================
+# EXERCÍCIO 10 — ÁGUA E ÓLEO EM UM CONE
+# ============================================================
+
+class Exercicio10(Scene):
+    def construct(self):
+        # ----------------------------------------------------
+        # Título
+        # ----------------------------------------------------
+
+        titulo = Text(
+            "Exercício 10 — Água e óleo em um cone",
+            color=BLACK,
+            font_size=36,
+        ).to_edge(UP)
+
+        self.play(Write(titulo))
+        self.wait(0.5)
+
+        # ----------------------------------------------------
+        # Medidas usadas somente para desenhar a figura
+        # ----------------------------------------------------
+
+        centro_x = -3.5
+
+        y_vertice = -2.4
+        y_topo = 2.35
+
+        altura_visual = y_topo - y_vertice
+
+        metade_base = 2.0
+
+        vertice = np.array([
+            centro_x,
+            y_vertice,
+            0,
+        ])
+
+        topo_esquerdo = np.array([
+            centro_x - metade_base,
+            y_topo,
+            0,
+        ])
+
+        topo_direito = np.array([
+            centro_x + metade_base,
+            y_topo,
+            0,
+        ])
+
+        # ----------------------------------------------------
+        # Contorno do cone
+        # ----------------------------------------------------
+
+        lado_esquerdo = Line(
+            vertice,
+            topo_esquerdo,
+            color=BLACK,
+            stroke_width=4,
+        )
+
+        lado_direito = Line(
+            vertice,
+            topo_direito,
+            color=BLACK,
+            stroke_width=4,
+        )
+
+        base_superior = Line(
+            topo_esquerdo,
+            topo_direito,
+            color=BLACK,
+            stroke_width=4,
+        )
+
+        contorno_cone = VGroup(
+            lado_esquerdo,
+            lado_direito,
+            base_superior,
+        )
+
+        # ----------------------------------------------------
+        # Posição inicial da separação entre água e óleo
+        # A superfície está na metade da altura.
+        # ----------------------------------------------------
+
+        razao_inicial = 0.5
+
+        y_interface = (
+            y_vertice
+            + razao_inicial * altura_visual
+        )
+
+        meia_largura_interface = (
+            metade_base * razao_inicial
+        )
+
+        interface_esquerda = np.array([
+            centro_x - meia_largura_interface,
+            y_interface,
+            0,
+        ])
+
+        interface_direita = np.array([
+            centro_x + meia_largura_interface,
+            y_interface,
+            0,
+        ])
+
+        linha_interface = DashedLine(
+            interface_esquerda,
+            interface_direita,
+            color=BLACK,
+            stroke_width=3,
+            dash_length=0.12,
+        )
+
+        # ----------------------------------------------------
+        # Água: cone inferior
+        # ----------------------------------------------------
+
+        agua = Polygon(
+            vertice,
+            interface_esquerda,
+            interface_direita,
+            color=BLUE_D,
+            fill_color=BLUE_D,
+            fill_opacity=0.65,
+            stroke_width=0,
+        )
+
+        # ----------------------------------------------------
+        # Óleo: região superior
+        # ----------------------------------------------------
+
+        oleo = Polygon(
+            topo_esquerdo,
+            topo_direito,
+            interface_direita,
+            interface_esquerda,
+            color=YELLOW_D,
+            fill_color=YELLOW_D,
+            fill_opacity=0.65,
+            stroke_width=0,
+        )
+
+        rotulo_agua = Text(
+            "água",
+            color=BLUE_E,
+            font_size=28,
+        ).move_to([
+            centro_x,
+            y_vertice + 0.85,
+            0,
+        ])
+
+        rotulo_oleo = Text(
+            "óleo",
+            color=ORANGE,
+            font_size=28,
+        ).move_to([
+            centro_x,
+            y_interface + 1.15,
+            0,
+        ])
+
+        # ----------------------------------------------------
+        # Indicação das alturas
+        # ----------------------------------------------------
+
+        linha_h = DoubleArrow(
+            start=np.array([
+                centro_x - 2.55,
+                y_vertice,
+                0,
+            ]),
+            end=np.array([
+                centro_x - 2.55,
+                y_topo,
+                0,
+            ]),
+            color=PURPLE,
+            buff=0,
+            stroke_width=3,
+            tip_length=0.14,
+        )
+
+        rotulo_h = MathTex(
+            r"h",
+            color=PURPLE,
+            font_size=42,
+        ).next_to(
+            linha_h,
+            LEFT,
+            buff=0.12,
+        )
+
+        linha_metade = DoubleArrow(
+            start=np.array([
+                centro_x + 2.45,
+                y_vertice,
+                0,
+            ]),
+            end=np.array([
+                centro_x + 2.45,
+                y_interface,
+                0,
+            ]),
+            color=BLUE_E,
+            buff=0,
+            stroke_width=3,
+            tip_length=0.14,
+        )
+
+        rotulo_metade = MathTex(
+            r"\frac{h}{2}",
+            color=BLUE_E,
+            font_size=38,
+        ).next_to(
+            linha_metade,
+            RIGHT,
+            buff=0.12,
+        )
+
+        # ----------------------------------------------------
+        # Apresentação da figura
+        # ----------------------------------------------------
+
+        self.play(
+            Create(contorno_cone),
+            run_time=1.5,
+        )
+
+        self.play(
+            FadeIn(agua),
+            FadeIn(oleo),
+            Create(linha_interface),
+            run_time=1.3,
+        )
+
+        self.play(
+            FadeIn(rotulo_agua),
+            FadeIn(rotulo_oleo),
+            Create(linha_h),
+            FadeIn(rotulo_h),
+            Create(linha_metade),
+            FadeIn(rotulo_metade),
+            run_time=1.4,
+        )
+
+        self.wait(2)
+
+        # ----------------------------------------------------
+        # Cálculo do volume inicial da água
+        # ----------------------------------------------------
+
+        texto_semelhanca = Text(
+            "O volume varia com o cubo da razão entre as alturas.",
+            color=BLACK,
+            font_size=25,
+        ).move_to([
+            3.1,
+            1.95,
+            0,
+        ])
+
+        formula_semelhanca = MathTex(
+            r"\frac{V_1}{V_2}",
+            r"=",
+            r"\left(\frac{h_1}{h_2}\right)^3",
+            color=BLACK,
+            font_size=48,
+        ).move_to([
+            3.1,
+            1.15,
+            0,
+        ])
+
+        self.play(Write(texto_semelhanca))
+        self.play(Write(formula_semelhanca))
+
+        self.wait(1)
+
+        volume_agua_1 = MathTex(
+            r"V_{\mathrm{agua}}",
+            r"=",
+            r"\left(\frac{h/2}{h}\right)^3",
+            r"V_{\mathrm{total}}",
+            color=BLACK,
+            font_size=45,
+        ).move_to([
+            3.1,
+            0.05,
+            0,
+        ])
+
+        volume_agua_1[0].set_color(BLUE_E)
+
+        volume_agua_2 = MathTex(
+            r"V_{\mathrm{agua}}",
+            r"=",
+            r"\left(\frac{1}{2}\right)^3",
+            r"V_{\mathrm{total}}",
+            color=BLACK,
+            font_size=47,
+        ).move_to(volume_agua_1)
+
+        volume_agua_2[0].set_color(BLUE_E)
+
+        volume_agua_3 = MathTex(
+            r"V_{\mathrm{agua}}",
+            r"=",
+            r"\frac{1}{8}",
+            r"V_{\mathrm{total}}",
+            color=BLACK,
+            font_size=50,
+        ).move_to(volume_agua_1)
+
+        volume_agua_3[0].set_color(BLUE_E)
+        volume_agua_3[2].set_color(BLUE_E)
+
+        self.play(
+            Write(volume_agua_1),
+            run_time=1.5,
+        )
+
+        self.wait(0.7)
+
+        self.play(
+            TransformMatchingTex(
+                volume_agua_1,
+                volume_agua_2,
+            ),
+            run_time=1.3,
+        )
+
+        self.wait(0.7)
+
+        self.play(
+            TransformMatchingTex(
+                volume_agua_2,
+                volume_agua_3,
+            ),
+            run_time=1.3,
+        )
+
+        self.play(
+            Circumscribe(
+                volume_agua_3,
+                color=BLUE_D,
+                buff=0.15,
+            )
+        )
+
+        self.wait(1)
+
+        # ----------------------------------------------------
+        # Volume do óleo
+        # ----------------------------------------------------
+
+        volume_oleo_1 = MathTex(
+            r"V_{\mathrm{oleo}}",
+            r"=",
+            r"V_{\mathrm{total}}",
+            r"-",
+            r"V_{\mathrm{agua}}",
+            color=BLACK,
+            font_size=45,
+        ).move_to([
+            3.1,
+            -1.05,
+            0,
+        ])
+
+        volume_oleo_1[0].set_color(ORANGE)
+        volume_oleo_1[4].set_color(BLUE_E)
+
+        volume_oleo_2 = MathTex(
+            r"V_{\mathrm{oleo}}",
+            r"=",
+            r"V_{\mathrm{total}}",
+            r"-",
+            r"\frac{1}{8}V_{\mathrm{total}}",
+            color=BLACK,
+            font_size=43,
+        ).move_to(volume_oleo_1)
+
+        volume_oleo_2[0].set_color(ORANGE)
+        volume_oleo_2[4].set_color(BLUE_E)
+
+        volume_oleo_3 = MathTex(
+            r"V_{\mathrm{oleo}}",
+            r"=",
+            r"\frac{7}{8}",
+            r"V_{\mathrm{total}}",
+            color=BLACK,
+            font_size=50,
+        ).move_to(volume_oleo_1)
+
+        volume_oleo_3[0].set_color(ORANGE)
+        volume_oleo_3[2].set_color(ORANGE)
+
+        self.play(
+            Write(volume_oleo_1),
+            run_time=1.4,
+        )
+
+        self.wait(0.6)
+
+        self.play(
+            TransformMatchingTex(
+                volume_oleo_1,
+                volume_oleo_2,
+            ),
+            run_time=1.3,
+        )
+
+        self.wait(0.6)
+
+        self.play(
+            TransformMatchingTex(
+                volume_oleo_2,
+                volume_oleo_3,
+            ),
+            run_time=1.3,
+        )
+
+        self.play(
+            Circumscribe(
+                volume_oleo_3,
+                color=ORANGE,
+                buff=0.15,
+            )
+        )
+
+        self.wait(2)
+
+        # ----------------------------------------------------
+        # Escoamento da água
+        # ----------------------------------------------------
+
+        texto_escoamento = Text(
+            "A água escoa completamente.",
+            color=BLACK,
+            font_size=27,
+        ).to_edge(DOWN, buff=0.3)
+
+        self.play(Write(texto_escoamento))
+
+        # Razão final da altura do óleo.
+        razao_final = (7 / 8) ** (1 / 3)
+
+        y_final = (
+            y_vertice
+            + razao_final * altura_visual
+        )
+
+        meia_largura_final = (
+            metade_base * razao_final
+        )
+
+        final_esquerda = np.array([
+            centro_x - meia_largura_final,
+            y_final,
+            0,
+        ])
+
+        final_direita = np.array([
+            centro_x + meia_largura_final,
+            y_final,
+            0,
+        ])
+
+        oleo_final = Polygon(
+            vertice,
+            final_esquerda,
+            final_direita,
+            color=YELLOW_D,
+            fill_color=YELLOW_D,
+            fill_opacity=0.65,
+            stroke_width=0,
+        )
+
+        linha_final = DashedLine(
+            final_esquerda,
+            final_direita,
+            color=ORANGE,
+            stroke_width=3,
+            dash_length=0.12,
+        )
+
+        rotulo_oleo_final = Text(
+            "óleo",
+            color=ORANGE,
+            font_size=28,
+        ).move_to([
+            centro_x,
+            y_vertice
+            + razao_final * altura_visual / 2,
+            0,
+        ])
+
+        self.play(
+            FadeOut(agua, shift=0.5 * DOWN),
+            FadeOut(rotulo_agua, shift=0.5 * DOWN),
+            FadeOut(linha_interface),
+            FadeOut(linha_metade),
+            FadeOut(rotulo_metade),
+            run_time=1.4,
+        )
+
+        self.play(
+            ReplacementTransform(
+                oleo,
+                oleo_final,
+            ),
+            ReplacementTransform(
+                rotulo_oleo,
+                rotulo_oleo_final,
+            ),
+            Create(linha_final),
+            run_time=2,
+        )
+
+        self.wait(1)
+
+        self.play(
+            FadeOut(texto_escoamento),
+            FadeOut(texto_semelhanca),
+            FadeOut(formula_semelhanca),
+            FadeOut(volume_agua_3),
+            FadeOut(volume_oleo_3),
+        )
+
+        # ----------------------------------------------------
+        # Altura final x
+        # ----------------------------------------------------
+
+        linha_x = DoubleArrow(
+            start=np.array([
+                centro_x + 2.45,
+                y_vertice,
+                0,
+            ]),
+            end=np.array([
+                centro_x + 2.45,
+                y_final,
+                0,
+            ]),
+            color=RED,
+            buff=0,
+            stroke_width=3,
+            tip_length=0.14,
+        )
+
+        rotulo_x = MathTex(
+            r"x",
+            color=RED,
+            font_size=42,
+        ).next_to(
+            linha_x,
+            RIGHT,
+            buff=0.12,
+        )
+
+        self.play(
+            Create(linha_x),
+            FadeIn(rotulo_x),
+        )
+
+        pergunta = Text(
+            "Qual é a altura final do óleo?",
+            color=BLACK,
+            font_size=28,
+        ).move_to([
+            3.1,
+            1.95,
+            0,
+        ])
+
+        self.play(Write(pergunta))
+
+        # ----------------------------------------------------
+        # Equação final
+        # ----------------------------------------------------
+
+        passo_1 = MathTex(
+            r"\left(\frac{x}{h}\right)^3",
+            r"=",
+            r"\frac{7}{8}",
+            color=BLACK,
+            font_size=54,
+        ).move_to([
+            3.1,
+            0.85,
+            0,
+        ])
+
+        passo_1[0].set_color(RED)
+        passo_1[2].set_color(ORANGE)
+
+        passo_2 = MathTex(
+            r"\frac{x}{h}",
+            r"=",
+            r"\sqrt[3]{\frac{7}{8}}",
+            color=BLACK,
+            font_size=54,
+        ).move_to(passo_1)
+
+        passo_2[0].set_color(RED)
+
+        passo_3 = MathTex(
+            r"\frac{x}{h}",
+            r"=",
+            r"\frac{\sqrt[3]{7}}{2}",
+            color=BLACK,
+            font_size=56,
+        ).move_to(passo_1)
+
+        passo_3[0].set_color(RED)
+
+        resultado = MathTex(
+            r"x",
+            r"=",
+            r"\frac{\sqrt[3]{7}}{2}",
+            r"h",
+            color=BLACK,
+            font_size=60,
+        ).move_to(passo_1)
+
+        resultado[0].set_color(RED)
+        resultado[2].set_color(ORANGE)
+        resultado[3].set_color(PURPLE)
+
+        self.play(
+            Write(passo_1),
+            run_time=1.5,
+        )
+
+        self.wait(0.8)
+
+        self.play(
+            TransformMatchingTex(
+                passo_1,
+                passo_2,
+            ),
+            run_time=1.4,
+        )
+
+        self.wait(0.8)
+
+        self.play(
+            TransformMatchingTex(
+                passo_2,
+                passo_3,
+            ),
+            run_time=1.4,
+        )
+
+        self.wait(0.8)
+
+        self.play(
+            TransformMatchingTex(
+                passo_3,
+                resultado,
+            ),
+            run_time=1.5,
+        )
+
+        caixa = SurroundingRectangle(
+            resultado,
+            color=RED,
+            buff=0.22,
+            stroke_width=4,
+        )
+
+        alternativa = Text(
+            "Alternativa A",
+            color=BLACK,
+            font_size=30,
+        ).next_to(
+            caixa,
+            DOWN,
+            buff=0.4,
+        )
+
+        self.play(Create(caixa))
+        self.play(FadeIn(alternativa))
+
+        self.wait(4)
+
+        self.play(
+            FadeOut(
+                VGroup(
+                    titulo,
+                    contorno_cone,
+                    oleo_final,
+                    linha_final,
+                    rotulo_oleo_final,
+                    linha_h,
+                    rotulo_h,
+                    linha_x,
+                    rotulo_x,
+                    pergunta,
+                    resultado,
+                    caixa,
+                    alternativa,
+                )
+            )
+        )
